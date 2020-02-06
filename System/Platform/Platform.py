@@ -14,9 +14,20 @@ from Config import ConfigParser
 from System import CC_MAIN_DIR
 
 
-class CloudPlatform(object, metaclass=abc.ABCMeta):
-
+class Platform(object, metaclass=abc.ABCMeta):
     CONFIG_SPEC = f"{CC_MAIN_DIR}/System/Platform/Platform.validate"
+
+    @staticmethod
+    def generate_unique_id(id_len=6):
+        return str(uuid.uuid4())[0:id_len]
+
+    @staticmethod
+    def standardize_dir(dir_path):
+        # Makes directory names uniform to include a single '/' at the end
+        return dir_path.rstrip("/") + "/"
+
+
+class CloudPlatform(Platform):
 
     def __init__(self, name, platform_config_file, final_output_dir):
 
@@ -68,7 +79,7 @@ class CloudPlatform(object, metaclass=abc.ABCMeta):
         self.disk_image = self.config["disk_image"]
         self.disk_image_obj = None
 
-        #TODO: I still have to add this, because Datastore required a work directory
+        # TODO: I still have to add this, because Datastore required a work directory
         self.wrk_dir = "/data"
         self.final_output_dir = self.standardize_dir(final_output_dir)
 
@@ -357,12 +368,3 @@ class CloudPlatform(object, metaclass=abc.ABCMeta):
                     serialization.PublicFormat.OpenSSH
                 )
             )
-
-    @staticmethod
-    def generate_unique_id(id_len=6):
-        return str(uuid.uuid4())[0:id_len]
-
-    @staticmethod
-    def standardize_dir(dir_path):
-        # Makes directory names uniform to include a single '/' at the end
-        return dir_path.rstrip("/") + "/"

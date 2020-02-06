@@ -8,7 +8,7 @@ from collections import OrderedDict
 from System.Platform import Process
 
 
-class CloudInstance(object, metaclass=abc.ABCMeta):
+class Instance(object, metaclass=abc.ABCMeta):
 
     OFF         = 0  # Destroyed or not allocated on the cloud at all
     CREATING    = 1  # Instance is being created/provisioned/allocated
@@ -16,6 +16,9 @@ class CloudInstance(object, metaclass=abc.ABCMeta):
     AVAILABLE   = 3  # Available for running processes
 
     STATUSES    = ["OFF", "CREATING", "DESTROYING", "AVAILABLE"]
+
+
+class CloudInstance(Instance):
 
     def __init__(self, name, nr_cpus, mem, disk_space, disk_image, **kwargs):
 

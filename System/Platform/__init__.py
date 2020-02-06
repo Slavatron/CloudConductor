@@ -1,7 +1,7 @@
 from .Process import Process
 
-from .CloudPlatform import CloudPlatform
-from .CloudInstance import CloudInstance
+from .Platform import Platform, CloudPlatform
+from .Instance import Instance, CloudInstance
 
 from .StorageHelper import StorageHelper
 from .DockerHelper import DockerHelper
